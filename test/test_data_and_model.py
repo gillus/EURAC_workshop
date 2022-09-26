@@ -37,3 +37,11 @@ def test_model_metrics(adult_test_dataset):
     assert metrics['>50K']['precision'] > 0.7  # fill here
     assert metrics['>50K']['recall'] > 0.1  # fill here
 
+def test_model_overconfidence_FP(adult_test_dataset):
+    x, y, data_path = adult_test_dataset
+    clf = joblib.load('./model.pkl')
+    predictions = clf.predict_proba(x)
+
+    FP = np.where((clf.predict(x) != y) & (predictions.argmax(axis=1) == 1))
+
+    assert predictions[FP].shape[0] < 0.1 * predictions.shape[0]
