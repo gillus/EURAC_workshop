@@ -3,17 +3,19 @@ import json
 import os
 import numpy as np
 from sklearn.model_selection import train_test_split
+import yaml
 
 
-def prepare_data(data_path: str, parameters=None):
+def prepare_data(data_path: str):
     # This function trains a random folder classifier using the data specified by datapath
     # If parameters are not specified as argument look for params.json file, otherwise create default values
-    if parameters is None:
-        if os.path.exists('./params_data_prep.json'):
-            parameters = json.load(open("parparams_data_prep.json", "r"))
-        else:
-            parameters = dict(test_size=0.2, val_size=0.2, undersampling=0.75)
-
+    # if parameters is None:
+    #     if os.path.exists('./params_data_prep.json'):
+    #         parameters = json.load(open("parparams_data_prep.json", "r"))
+    #     else:
+    #         parameters = dict(test_size=0.2, val_size=0.2, undersampling=0.75)
+    parameters = yaml.safe_load(open("params.yaml"))["prepare"]
+    
     raw_data = pd.read_csv(data_path)
     data = raw_data.iloc[:int(raw_data.shape[0]*(1-parameters['test_size'])), :]
     holdout_data = raw_data.iloc[int(raw_data.shape[0]*(1-parameters['test_size'])):, :]

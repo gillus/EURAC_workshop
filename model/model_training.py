@@ -9,6 +9,7 @@ import json
 import os
 import joblib
 import pandas as pd
+import yaml
 
 
 def data_loader(path: str):
@@ -21,15 +22,18 @@ def data_loader(path: str):
     return x, y
 
 
-def train_random_forest_model(parameters=None):
+def train_random_forest_model():
     # This function trains a random folder classifier using the data specified by datapath
     # If parameters are not specified as argument look for params.json file, otherwise create default values
-    if parameters is None:
-        if os.path.exists('./params.json'):
-            parameters = json.load(open("params.json", "r"))
-        else:
-            parameters = dict(n_estimators=100, max_depth=4, criterion='gini',
-                              min_sample_leaf=10)
+    # if parameters is None:
+    #     if os.path.exists('./params.json'):
+    #         parameters = json.load(open("params.json", "r"))
+    #     else:
+    #         parameters = dict(n_estimators=100, max_depth=4, criterion='gini',
+    #                           min_sample_leaf=10)
+    parameters = yaml.safe_load(open("params.yaml"))["train"]
+
+
     print(parameters)
     x_training, y_training = data_loader('./train.csv')
     x_val, y_val = data_loader('./val.csv')
