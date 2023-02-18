@@ -1,15 +1,11 @@
 
-name: Test
+name: DVC  
 
 on: [push]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                python-version: [3.7, 3.8]
-
+  build:
+    runs-on: ubuntu-latest
     steps:
         - name: Checkout
           uses: actions/checkout@v2
