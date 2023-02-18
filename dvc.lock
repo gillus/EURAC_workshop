@@ -7,8 +7,8 @@ stages:
       md5: d71fdf5403905f3cf6ae9cd8b437c98c
       size: 1416
     - path: data/raw_data.csv
-      md5: 639b6192cb043d171b945265f09bc0ea
-      size: 4409700
+      md5: 1e5233e3b44398c514a86296241d298f
+      size: 4223829
     params:
       params.yaml:
         prepare.test_size: 0.2
@@ -16,14 +16,14 @@ stages:
         prepare.val_size: 0.2
     outs:
     - path: holdout.csv
-      md5: 695840b2c809eaba8439da5caae1f6ba
-      size: 918287
+      md5: 2dcf7bb5a52f68f8cf470f43209d61f1
+      size: 881407
     - path: train.csv
-      md5: 8103da611da177724c6f9f0be0fcca6d
-      size: 2203695
+      md5: 284a62ed9b966f463bcbc8b8a0bef6df
+      size: 2114920
     - path: val.csv
-      md5: 86ce4b65062e119bf6ba931c8c55d557
-      size: 734908
+      md5: 28af9e2980ea99960b32e2f8eac03392
+      size: 704618
   train:
     cmd: python3 model/model_training.py
     deps:
@@ -31,11 +31,11 @@ stages:
       md5: de2a654f4b1b8a03dbf4bb95e1056a0d
       size: 2791
     - path: train.csv
-      md5: 8103da611da177724c6f9f0be0fcca6d
-      size: 2203695
+      md5: 284a62ed9b966f463bcbc8b8a0bef6df
+      size: 2114920
     - path: val.csv
-      md5: 86ce4b65062e119bf6ba931c8c55d557
-      size: 734908
+      md5: 28af9e2980ea99960b32e2f8eac03392
+      size: 704618
     params:
       params.yaml:
         train.criterion: gini
@@ -44,21 +44,21 @@ stages:
         train.n_estimators: 100
     outs:
     - path: metrics.json
-      md5: 2d0ca75c0b15d4c20973da450d51ebc9
-      size: 533
+      md5: d73a49d54a6fdfb70b0a7ddcf839d26c
+      size: 528
     - path: model.pkl
-      md5: c1eb6e39bce8ab66ecbcc7bbe7b80712
-      size: 178671
+      md5: a1525376e60b9547a8190a74c7acd57c
+      size: 182771
   test:
     cmd: python3 -m pytest
     deps:
     - path: holdout.csv
-      md5: 695840b2c809eaba8439da5caae1f6ba
-      size: 918287
+      md5: 2dcf7bb5a52f68f8cf470f43209d61f1
+      size: 881407
     - path: test/test_data_and_model.py
       md5: 9fbe39453ff5d6901d65b0f8d1cde8bf
       size: 2408
     outs:
     - path: prc.json
-      md5: c1ef849e37c782ee885c55af7e032494
-      size: 140982
+      md5: a9b3911c75edb53347e2c37783176975
+      size: 136578

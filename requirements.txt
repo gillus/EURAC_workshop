@@ -2,4 +2,5 @@ scikit-learn
 numpy
 pytest
 pandas
-  
+dvc[s3]
+lightgbm  
