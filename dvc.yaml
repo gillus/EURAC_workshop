@@ -27,3 +27,8 @@ stages:
     outs:
     - metrics.json
     - model.pkl
+  test:
+    cmd: python3 -m pytest
+    deps:
+    - holdout.csv
+    - test/test_data_and_model.py

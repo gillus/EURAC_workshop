@@ -24,3 +24,37 @@ stages:
     - path: val.csv
       md5: 86ce4b65062e119bf6ba931c8c55d557
       size: 734908
+  train:
+    cmd: python3 model/model_training.py
+    deps:
+    - path: model/model_training.py
+      md5: de2a654f4b1b8a03dbf4bb95e1056a0d
+      size: 2791
+    - path: train.csv
+      md5: 8103da611da177724c6f9f0be0fcca6d
+      size: 2203695
+    - path: val.csv
+      md5: 86ce4b65062e119bf6ba931c8c55d557
+      size: 734908
+    params:
+      params.yaml:
+        train.criterion: gini
+        train.max_depth: 4
+        train.min_sample_leaf: 10
+        train.n_estimators: 100
+    outs:
+    - path: metrics.json
+      md5: 2d0ca75c0b15d4c20973da450d51ebc9
+      size: 533
+    - path: model.pkl
+      md5: c1eb6e39bce8ab66ecbcc7bbe7b80712
+      size: 178671
+  test:
+    cmd: python3 -m pytest
+    deps:
+    - path: holdout.csv
+      md5: 695840b2c809eaba8439da5caae1f6ba
+      size: 918287
+    - path: test/test_data_and_model.py
+      md5: 9fbe39453ff5d6901d65b0f8d1cde8bf
+      size: 2408

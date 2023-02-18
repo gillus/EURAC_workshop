@@ -1,13 +1,15 @@
 import pytest
-from sklearn.metrics import classification_report
-from data.datamanager import data_loader
+from sklearn.metrics import classification_report, precision_recall_curve
+from model.model_training import data_loader
 import joblib
 import numpy as np
+import math
+import json
 
 
 @pytest.fixture
 def adult_test_dataset():
-    path = './data/adult_test.csv'
+    path = './holdout.csv'
     x, y = data_loader(path)
     return x, y, path
 
@@ -46,3 +48,27 @@ def test_model_overconfidence_fp(adult_test_dataset):
     fp = np.where((clf.predict(x) != y) & (predictions.argmax(axis=1) == 1))
 
     assert predictions[fp].shape[0] < 0.1 * predictions.shape[0]
+
+
+def test_prc(adult_test_dataset):
+    x, y, data_path = adult_test_dataset
+    clf = joblib.load('./model.pkl')
+    predictions = clf.predict_proba(x)[:, 1]
+    precision, recall, prc_thresholds = precision_recall_curve(y=='>50K', predictions)
+    nth_point = math.ceil(len(prc_thresholds) / 1000)
+    prc_points = list(zip(precision, recall, prc_thresholds))[::nth_point]
+    prc_file = "prc.json"
+    with open(prc_file, "w") as fd:
+        json.dump(
+            {
+                "prc": [
+                    {"precision": p, "recall": r, "threshold": t}
+                    for p, r, t in prc_points
+                ]
+            },
+            fd,
+            indent=4,
+        )
+
+    print('AUPR',precision, recall, predictions)
+    assert np.dot(precision, recall)/x.shape[0]>0.2
