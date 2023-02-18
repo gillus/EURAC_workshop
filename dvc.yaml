@@ -32,3 +32,11 @@ stages:
     deps:
     - holdout.csv
     - test/test_data_and_model.py
+    outs:
+    - prc.json
+plots:
+  - Precision-Recall:
+      template: simple
+      x: recall
+      y:
+        prc.json: precision

@@ -58,3 +58,7 @@ stages:
     - path: test/test_data_and_model.py
       md5: 9fbe39453ff5d6901d65b0f8d1cde8bf
       size: 2408
+    outs:
+    - path: prc.json
+      md5: c1ef849e37c782ee885c55af7e032494
+      size: 140982
