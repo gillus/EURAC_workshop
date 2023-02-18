@@ -12,3 +12,5 @@ train.csv
 val.csv
 data/raw_data.csv
 metrics.json
+model.pkl
+metrics.json
