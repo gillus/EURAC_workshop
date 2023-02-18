@@ -1,0 +1,26 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python3 data/data_preparation.py
+    deps:
+    - path: data/data_preparation.py
+      md5: d71fdf5403905f3cf6ae9cd8b437c98c
+      size: 1416
+    - path: data/raw_data.csv
+      md5: 639b6192cb043d171b945265f09bc0ea
+      size: 4409700
+    params:
+      params.yaml:
+        prepare.test_size: 0.2
+        prepare.undersampling: 0.75
+        prepare.val_size: 0.2
+    outs:
+    - path: holdout.csv
+      md5: 695840b2c809eaba8439da5caae1f6ba
+      size: 918287
+    - path: train.csv
+      md5: 8103da611da177724c6f9f0be0fcca6d
+      size: 2203695
+    - path: val.csv
+      md5: 86ce4b65062e119bf6ba931c8c55d557
+      size: 734908
