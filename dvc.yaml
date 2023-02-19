@@ -30,8 +30,11 @@ stages:
   test:
     cmd: python3 -m pytest
     deps:
+    - model.pkl    
     - holdout.csv
     - test/test_data_and_model.py
+    metrics:
+    - rocauc.json
     outs:
     - prc.json
 plots:
