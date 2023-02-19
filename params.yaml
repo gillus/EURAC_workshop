@@ -1,7 +1,7 @@
 prepare:
   test_size: 0.2
   val_size: 0.2
-  undersampling: 0.75
+  undersampling: 0.9
 
 train:
   n_estimators: 100
