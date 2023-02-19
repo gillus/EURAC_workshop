@@ -34,7 +34,9 @@ stages:
     - holdout.csv
     - test/test_data_and_model.py
     metrics:
-    - rocauc.json
+    - rocauc.json:
+        cache: true
+
     outs:
     - prc.json
 plots:
