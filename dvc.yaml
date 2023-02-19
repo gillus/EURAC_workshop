@@ -36,7 +36,6 @@ stages:
     metrics:
     - rocauc.json:
         cache: true
-
     outs:
     - prc.json
 plots:

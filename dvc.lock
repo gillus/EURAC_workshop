@@ -4,26 +4,26 @@ stages:
     cmd: python3 data/data_preparation.py
     deps:
     - path: data/data_preparation.py
-      md5: d71fdf5403905f3cf6ae9cd8b437c98c
-      size: 1416
+      md5: edd448fe1419fc5358a8a40f60b73ef7
+      size: 1463
     - path: data/raw_data.csv
-      md5: 1e5233e3b44398c514a86296241d298f
-      size: 4223829
+      md5: 639b6192cb043d171b945265f09bc0ea
+      size: 4409700
     params:
       params.yaml:
         prepare.test_size: 0.2
-        prepare.undersampling: 0.75
+        prepare.undersampling: 0.9
         prepare.val_size: 0.2
     outs:
     - path: holdout.csv
-      md5: 2dcf7bb5a52f68f8cf470f43209d61f1
-      size: 881407
+      md5: 695840b2c809eaba8439da5caae1f6ba
+      size: 918287
     - path: train.csv
-      md5: 284a62ed9b966f463bcbc8b8a0bef6df
-      size: 2114920
+      md5: 19fd50d871e25a49415ce8a08c9e8cde
+      size: 2645118
     - path: val.csv
-      md5: 28af9e2980ea99960b32e2f8eac03392
-      size: 704618
+      md5: 2682beac5efd57fc57219aef4316054c
+      size: 733800
   train:
     cmd: python3 model/model_training.py
     deps:
@@ -31,11 +31,11 @@ stages:
       md5: de2a654f4b1b8a03dbf4bb95e1056a0d
       size: 2791
     - path: train.csv
-      md5: 284a62ed9b966f463bcbc8b8a0bef6df
-      size: 2114920
+      md5: 19fd50d871e25a49415ce8a08c9e8cde
+      size: 2645118
     - path: val.csv
-      md5: 28af9e2980ea99960b32e2f8eac03392
-      size: 704618
+      md5: 2682beac5efd57fc57219aef4316054c
+      size: 733800
     params:
       params.yaml:
         train.criterion: gini
@@ -44,21 +44,27 @@ stages:
         train.n_estimators: 100
     outs:
     - path: metrics.json
-      md5: d73a49d54a6fdfb70b0a7ddcf839d26c
-      size: 528
+      md5: 4142f72abf1f434733323d538018b015
+      size: 533
     - path: model.pkl
-      md5: a1525376e60b9547a8190a74c7acd57c
-      size: 182771
+      md5: e5c8ca4737fac879fb7ec1743d9a8ef6
+      size: 182739
   test:
     cmd: python3 -m pytest
     deps:
     - path: holdout.csv
-      md5: 2dcf7bb5a52f68f8cf470f43209d61f1
-      size: 881407
+      md5: 695840b2c809eaba8439da5caae1f6ba
+      size: 918287
+    - path: model.pkl
+      md5: e5c8ca4737fac879fb7ec1743d9a8ef6
+      size: 182739
     - path: test/test_data_and_model.py
-      md5: 9fbe39453ff5d6901d65b0f8d1cde8bf
-      size: 2408
+      md5: d6cf6ec5f2c2c212b7d5b76b377216e0
+      size: 2644
     outs:
     - path: prc.json
-      md5: a9b3911c75edb53347e2c37783176975
-      size: 136578
+      md5: 45246e4b68b8c69476c7e38d79dd7869
+      size: 139317
+    - path: rocauc.json
+      md5: ab7677663d7ce1a39485438c4596d10c
+      size: 36

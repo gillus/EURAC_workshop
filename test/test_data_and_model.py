@@ -69,6 +69,7 @@ def test_prc(adult_test_dataset):
             fd,
             indent=4,
         )
+        
     rocauc = roc_auc_score(y=='>50K', predictions)
     with open('rocauc.json', "w") as fd:
         json.dump(
