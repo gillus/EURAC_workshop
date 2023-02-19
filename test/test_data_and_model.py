@@ -1,5 +1,5 @@
 import pytest
-from sklearn.metrics import classification_report, precision_recall_curve
+from sklearn.metrics import classification_report, precision_recall_curve, roc_auc_score
 from model.model_training import data_loader
 import joblib
 import numpy as np
@@ -69,6 +69,14 @@ def test_prc(adult_test_dataset):
             fd,
             indent=4,
         )
-
+    rocauc = roc_auc_score(y=='>50K', predictions)
+    with open('rocauc.json', "w") as fd:
+        json.dump(
+            {
+                "rocauc": rocauc,
+            },
+            fd,
+            indent=4,
+        )
     print('AUPR',precision, recall, predictions)
     assert np.dot(precision, recall)/x.shape[0]>0.2

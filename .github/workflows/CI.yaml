@@ -4,7 +4,7 @@ name: DVC
 on: [push]
 
 jobs:
-  build:
+  dvc_repro:
     runs-on: ubuntu-latest
     steps:
         - name: Checkout

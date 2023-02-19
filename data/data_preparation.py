@@ -15,14 +15,14 @@ def prepare_data(data_path: str):
     #     else:
     #         parameters = dict(test_size=0.2, val_size=0.2, undersampling=0.75)
     parameters = yaml.safe_load(open("params.yaml"))["prepare"]
-    
+
     raw_data = pd.read_csv(data_path)
     data = raw_data.iloc[:int(raw_data.shape[0]*(1-parameters['test_size'])), :]
     holdout_data = raw_data.iloc[int(raw_data.shape[0]*(1-parameters['test_size'])):, :]
-    train_data, val_data = train_test_split(data, test_size=parameters['val_size'])    
+    train_data, val_data = train_test_split(data, test_size=parameters['val_size'], random_state=42)    
     x1 = train_data[train_data['income']=='>50k']
     x2 = train_data[train_data['income']!='>50k']
-    train_data = pd.concat([x1, x2.sample(frac=parameters['undersampling'])], axis=0).sample(frac=1.)
+    train_data = pd.concat([x1, x2.sample(frac=parameters['undersampling'], random_state=42)], axis=0).sample(frac=1., random_state=42)
 
     train_data.to_csv('train.csv', index=False)
     val_data.to_csv('val.csv', index=False)
