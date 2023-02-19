@@ -15,4 +15,3 @@ metrics.json
 model.pkl
 metrics.json
 prc.json
-/rocauc.json
